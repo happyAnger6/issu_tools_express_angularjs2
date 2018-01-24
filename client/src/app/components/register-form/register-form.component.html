@@ -1,0 +1,30 @@
+<div class="container" [hidden]="submitted">
+  <h1>添加用户</h1>
+  <form (ngSubmit)="onSubmit()" #newUserForm="ngForm">
+    <div class="form-group">
+      <label for="name">名字:</label>
+      <input type="text" class="form-control" id="name" [(ngModel)]="model.name" name="name" required #userName="ngModel"/>
+    </div>
+    <div [hidden]="userName.valid || userName.pristine" class="alert alert-danger">
+      必须输入名字.
+    </div>
+
+    <div class="form-group">
+      <label for="passwd">密码:</label>
+      <input type="password" class="form-control" id="passwd">
+    </div>
+
+    <button type="submit" class="btn btn-success" [disabled]="!newUserForm.form.valid">新增</button>
+
+  </form>
+</div>
+
+<div [hidden]="!submitted">
+  <h2>添加用户:</h2>
+  <div class="row">
+    <div class="col-xs-3">名字:</div>
+    <div class="col-xs-9  pull-left">{{ model.name }}</div>
+  </div>
+  <br>
+  <button class="btn btn-success" (click)="submitted=false">编辑</button>
+</div>

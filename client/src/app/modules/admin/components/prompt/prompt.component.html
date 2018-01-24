@@ -1,0 +1,46 @@
+<div class="row">
+  <div class="col-md-3">
+  <i class="fa fa-sticky-note-o">当前所有提示:</i>
+  </div>
+  <div class="col-md-3">
+    <button type="button" class="btn btn-outline-danger" (click)="onAddNew()">新增</button>
+  </div>
+</div>
+<br/>
+<br/>
+
+<div class="row" *ngIf="prompts">
+ <table class="table table-hover table-striped table-responsive">
+<thead class="thead-inverse">
+<tr>
+<th>序号</th>
+  <th>内容</th>
+  <th>操作</th>
+</tr>
+</thead>
+   <tbody>
+   <tr *ngFor="let prompt of prompts; let i=index" (click)="onEdit(i, prompt)">
+     <td></td>
+     <td>{{prompt}}</td>
+     <td><i class="fa fa-pencil-square-o"></i>编辑</td>
+   </tr>
+   </tbody>
+ </table>
+</div>
+
+
+<div class="row" *ngIf="oper">
+  <i *ngIf="oper===1" class="fa fa-file-text-o">新增</i>
+  <i *ngIf="oper===2" class="fa fa-pencil-square-o">编辑</i>
+  <form (ngSubmit)="onSubmit()" #cntForm="ngForm">
+    <div class="input-group input-group-lg">
+      <label for="content">内容:</label>
+      <input type="text" class="form-control" id="content" [(ngModel)]="editPrompt" name="content" required #input_cnt="ngModel"/>
+    </div>
+    <div [hidden]="input_cnt.valid" class="alert alert-danger">
+      不能为空.
+    </div>
+    <br/>
+    <button type="submit" class="btn btn-success" [disabled]="!cntForm.form.valid">提交</button>
+  </form>
+</div>

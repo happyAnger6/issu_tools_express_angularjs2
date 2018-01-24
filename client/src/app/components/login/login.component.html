@@ -1,0 +1,20 @@
+<div class="container">
+  <h1>用户登陆</h1>
+  <form (ngSubmit)="onSubmit()" #userLoginForm="ngForm">
+    <div class="form-group">
+      <label for="name">名字:</label>
+      <input type="text" class="form-control" id="name" [(ngModel)]="name" name="name" required #userName="ngModel"/>
+    </div>
+    <div [hidden]="userName.valid" class="alert alert-danger">
+      必须输入名字.
+    </div>
+
+    <div class="form-group">
+      <label for="passwd">密码:</label>
+      <input type="password" class="form-control" id="passwd">
+    </div>
+
+    <button type="submit" class="btn btn-success" [disabled]="!userLoginForm.form.valid">登陆</button>
+
+  </form>
+</div>

@@ -1,0 +1,69 @@
+<div class="row" *ngIf="selectedDeliver">
+  <div class="col-md-2">
+ <div class="card bg-primary text-white">
+  当前交付件: {{ selectedDeliver.name}}
+  </div>
+  </div>
+ <div class="col-md-1">
+   <div class="card bg-primary text-white">
+   B
+   </div>
+ </div>
+  <div class="col-md-1">
+    <div class="card bg-primary text-white">
+    X
+    </div>
+  </div>
+  <div class="col-md-1">
+    <div class="card bg-primary text-white">
+    Y
+    </div>
+  </div>
+  <div class="col-md-1">
+    <div class="card bg-primary text-white">
+    Z
+    </div>
+  </div>
+  <div class="col-md-2">
+    <button type="button" class="btn btn-success">保存</button>
+  </div>
+  <div class="col-md-2">
+    <button type="button" class="btn btn-danger">复原</button>
+  </div>
+</div>
+<div class="row" *ngIf="selectedDeliver">
+ <div class="col-md-2"></div>
+  <div class="col-md-1"><i class="fa fa-arrow-circle-up fa-lg" aria-hidden="true" (click)="addB(selectedDeliver.id)"></i></div>
+  <div class="col-md-1"><i class="fa fa-arrow-circle-up fa-lg" aria-hidden="true" (click)="addX(selectedDeliver.id)"></i></div>
+  <div class="col-md-1"><i class="fa fa-arrow-circle-up fa-lg" aria-hidden="true" (click)="addY(selectedDeliver.id)"></i></div>
+  <div class="col-md-1"><i class="fa fa-arrow-circle-up fa-lg" aria-hidden="true" (click)="addZ(selectedDeliver.id)"></i></div>
+  <div class="col-md-2"></div>
+  <div class="col-md-2"></div>
+</div>
+<div class="row" *ngIf="selectedDeliver">
+  <div class="col-md-2"></div>
+  <div class="col-md-1"><i class="fa fa-arrow-circle-o-down fa-lg" aria-hidden="true" (click)="subB(selectedDeliver.id)"></i></div>
+  <div class="col-md-1"><i class="fa fa-arrow-circle-o-down fa-lg" aria-hidden="true" (click)="subX(selectedDeliver.id)"></i></div>
+  <div class="col-md-1"><i class="fa fa-arrow-circle-o-down fa-lg" aria-hidden="true" (click)="subY(selectedDeliver.id)"></i></div>
+  <div class="col-md-1"><i class="fa fa-arrow-circle-o-down fa-lg" aria-hidden="true" (click)="subZ(selectedDeliver.id)"></i></div>
+  <div class="col-md-2"></div>
+  <div class="col-md-2"></div>
+</div>
+<table class="table table-hover table-info">
+  <thead class="thead-light">
+  <tr>
+    <th>交付件</th>
+    <th>类型</th>
+    <th>上版本</th>
+    <th>此版本</th>
+    <th>变化</th>
+  </tr>
+  </thead>
+  <tr class="delivers" *ngFor="let deliver of delivers">
+    <td [class.table-danger]="deliver === selectedDeliver" (click)="onSelectDeliver(deliver)"><i class="fa fa-file fa-lg"></i>{{deliver.name}}</td>
+    <td [class.table-danger]="deliver === selectedDeliver" (click)="onSelectDeliver(deliver)">{{deliver.type}}</td>
+    <td [class.table-danger]="deliver === selectedDeliver" (click)="onSelectDeliver(deliver)">{{deliver.pb}}.{{deliver.px}}.{{deliver.py}}.{{deliver.pz}}</td>
+    <td [class.table-danger]="deliver === selectedDeliver" (click)="onSelectDeliver(deliver)">{{deliver.b}}.{{deliver.x}}.{{deliver.y}}.{{deliver.z}}</td>
+    <td [class.table-danger]="deliver === selectedDeliver"></td>
+  </tr>
+</table>

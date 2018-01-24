@@ -1,0 +1,19 @@
+<div class="row" *ngIf="team">
+  <table *ngIf="userModulesDetails" class="table-bordered table-hover table-striped table-responsive">
+    <thead class="thead-dark">
+    <tr>
+      <th>反馈状态</th>
+      <th>姓名</th>
+      <th>模块</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let userModuel of userModulesDetails" [class.table-danger]="!userModuel.stat" (click)="onSelectModule(userModuel)">
+      <td [hidden]="!userModuel.stat"><i class="fa fa-check"></i></td>
+      <td [hidden]="userModuel.stat"><i class="fa fa-times"></i></td>
+      <td><i class="fa fa-user-circle"> {{userModuel.name}} </i></td>
+      <td><i class="fa fa-hand-grab-o"> {{userModuel.module}} </i></td>
+    </tr>
+    </tbody>
+  </table>
+</div>

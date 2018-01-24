@@ -1,0 +1,19 @@
+<div class="row">
+  <app-teams-header [allTeams]="allTeams" (evSelectedTeam)="onSelectedTeam($event)"></app-teams-header>
+</div>
+<div class="row" *ngIf="selectedTeam">
+  <app-user-modules-info [team]="selectedTeam" (evSelectModule)="onSelectedModule($event)"></app-user-modules-info>
+</div>
+<br/>
+<div class="row" *ngIf="selectedModule">
+<div class="col-md-3">
+<i class="fa fa-user-circle-o">当前用户: {{selectedModule.name}}</i>
+</div>
+  <div class="col-md-3">
+    <i class="fa fa-apple">当前模块: {{selectedModule.module}}</i>
+  </div>
+</div>
+<br/>
+<div calss="row" *ngIf="delivers">
+ <app-module-deliver-info [delivers]="delivers"></app-module-deliver-info>
+</div>

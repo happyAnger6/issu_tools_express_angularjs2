@@ -1,0 +1,16 @@
+<div class="row">
+  <div class="col-md-2">
+    <div ngbDropdown class="d-inline-block">
+      <button class="btn btn-outline-primary" id="dropdownBranch" ngbDropdownToggle>选 择 分 支</button>
+      <div ngbDropdownMenu aria-labelledby="dropdownBranch">
+       <button *ngFor="let branch of feedbackBranchs" class="dropdown-item" (click)="onSelect(branch)">{{ branch.name }}</button>
+      </div>
+    </div>
+  </div>
+      <div class="col-md-2">
+        <label>当前分支:</label>
+      </div>
+     <div class="col-md-2">
+        <input *ngIf="selectedBranch" [(ngModel)]="selectedBranch.name" disabled placeholder="BXXDXX"/>
+      </div>
+</div>

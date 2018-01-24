@@ -1,0 +1,5 @@
+<div class="row" *ngIf="allTeams">
+ <div class="btn-group">
+   <button *ngFor="let team of allTeams" type="button" class="btn btn-info" (click)="onSelectTeam(team)"><i class="fa fa-apple">{{ team.name }}({{ team.unfinishes }})</i></button>
+ </div>
+</div>

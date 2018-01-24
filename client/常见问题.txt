@@ -1,0 +1,3 @@
+ngModel需要导入FromsModule.必须为元素指定name属性.
+
+元素为空时不处理组件:*ngIf="selectedBranch"

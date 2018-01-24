@@ -1,0 +1,26 @@
+<div class="row" #topoArea>
+  <div id="contextmenu" class="btn-group" *ngIf="curNode">
+      <button type="button" class="btn btn-warning" disabled>{{ curNode.text }}</button>
+      <button type="button" class="btn btn-warning" (click)="onAddBranch(curNode.text)">添加子分支</button>
+      <button type="button" class="btn btn-warning">删除</button>
+  </div>
+  <div class="container" *ngIf="edit">
+    <label>{{ curNode.text }} 添加分支</label>
+    <form (ngSubmit)="onSubmit()" #newBranchForm="ngForm">
+      <div class="form-group">
+        <label for="name">子分支名称:</label>
+        <input type="text" class="form-control" id="name" [(ngModel)]="curNode.text" name="name" required #branchName="ngModel"/>
+      </div>
+      <div [hidden]="branchName.valid || branchName.pristine" class="alert alert-danger">
+        必须输入名字.
+      </div>
+
+      <button type="submit" class="btn btn-success" [disabled]="!newBranchForm.form.valid">新增</button>
+
+    </form>
+  </div>
+  <div class="row">
+  <i class="fa fa-line-chart>">分支拓扑:</i>
+  <canvas id="canvas" width="1200" height="800"></canvas>
+  </div>
+</div>
