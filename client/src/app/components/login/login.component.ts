@@ -23,6 +23,7 @@ export class LoginComponent implements OnInit {
   onSubmit(): void {
     if (this.userService.login(this.name)) {
         this.router.navigateByUrl(this.returnUrl ? this.returnUrl : '/');
+       // this.router.navigateByUrl('/');
     }
   }
 
