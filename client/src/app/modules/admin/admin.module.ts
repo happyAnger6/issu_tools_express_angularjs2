@@ -33,7 +33,6 @@ import {UserService} from '../../services/user.service';
    PromptService,
    BranchService,
    TopoService,
-   UserService
   ],
   declarations: [AdminMainComponent, FeedbackComponent, TeamsHeaderComponent, UserModulesInfoComponent, PromptComponent, TopoShowComponent, UsersComponent]
 })
