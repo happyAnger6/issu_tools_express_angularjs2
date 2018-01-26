@@ -12,6 +12,7 @@ import { UserService } from '../../services/user.service';
 export class LoginComponent implements OnInit {
 
   name: string;
+  passwd: string;
   returnUrl: string;
   constructor(private userService: UserService, private route: ActivatedRoute,
               private router: Router) { }
@@ -21,7 +22,7 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.userService.login(this.name)) {
+    if (this.userService.login(this.name, this.passwd)) {
         this.router.navigateByUrl(this.returnUrl ? this.returnUrl : '/');
        // this.router.navigateByUrl('/');
     }

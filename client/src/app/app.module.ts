@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { ContactModule } from './modules/contact/contact.module';
 import { FeedbackModule } from './modules/feedback/feedback.module';
@@ -34,6 +35,7 @@ import { LostPageComponent } from './components/lost-page/lost-page.component';
     NgbModule.forRoot(),
     BrowserModule,
     FormsModule,
+    HttpClientModule,
     ContactModule,
     SharedModule,
     FeedbackModule,

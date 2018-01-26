@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 var ModuleSchema = new mongoose.Schema({
-    Name: String,
+    Name: {type: String, required: [true], unique: true},
     Team: String,
     Delivers: [String]
 });

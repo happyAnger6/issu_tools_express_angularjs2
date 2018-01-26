@@ -11,7 +11,10 @@
 
     <div class="form-group">
       <label for="passwd">密码:</label>
-      <input type="password" class="form-control" id="passwd">
+      <input type="password" class="form-control" id="passwd" [(ngModel)]="passwd" name="passwd" required #userPwd="ngModel">
+    </div>
+    <div [hidden]="userPwd.valid" class="alert alert-danger">
+      必须输入密码.
     </div>
 
     <button type="submit" class="btn btn-success" [disabled]="!userLoginForm.form.valid">登陆</button>

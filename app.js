@@ -6,9 +6,15 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
-var api = require('./routes/api')
+var api = require('./routes/api');
+var user_auth = require('./lib/user_auth');
 
+var err_handler = require('./lib/handler');
 var app = express();
+
+var mongoose = require('mongoose');
+var uri = 'mongodb://localhost/test1';
+var db  = mongoose.connect(uri);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -23,24 +29,12 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'client/dist')));
 
 app.use('/', index);
+app.use('/api', user_auth.authenticate);
 app.use('/api', api);
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
-});
-
 // error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
+app.use(err_handler.logHandler);
+app.use(err_handler.notFoundHandler);
+app.use(err_handler.jsonHandler);
 
 module.exports = app;

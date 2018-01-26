@@ -10,7 +10,7 @@ import { UserService } from '../../services/user.service';
 })
 export class RegisterFormComponent implements OnInit {
 
-  model = new User(1, '张晓安', ['FS', 'Docker', 'Kubernetes', 'Angularjs2'], 'Support', 'admin');
+  model = new User(1, '张晓安', 'z09633', 'z09633@h3c.com', '123456', ['FS', 'Docker', 'Kubernetes', 'Angularjs2'], 'Support', 'admin');
 
   roles = ['ADMIN', 'TL', 'CMO'];
 

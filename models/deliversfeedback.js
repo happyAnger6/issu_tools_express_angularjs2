@@ -1,8 +1,8 @@
 var mongoose = require('mongoose');
 
 var DeliversFeedbackSchema = new mongoose.Schema({
-    Name: String,
-    BranchName: String,
+    Name: {type: String, required: [true]},
+    BranchName: {type: String, required: [true]},
     PreB: Number,
     PreX: Number,
     PreY: Number,

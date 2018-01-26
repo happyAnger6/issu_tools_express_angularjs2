@@ -6,7 +6,7 @@ import {TEAM_USERS} from '../mocks/teamUsers';
 import {TEAM_COUNTS} from '../mocks/teamCounts';
 import {TeamUser} from '../models/teamUser';
 
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class UserService {
@@ -19,9 +19,14 @@ export class UserService {
   }
 
   login(name: string, passwd: string): boolean {
-    this.httpClient.get<User>('http://' + name + ':' + passwd + '@localhost:3000/api/users/' + name + '/json')
-      .subscribe(data => {this.currUser = data});
-    console.log(this.currUser);
+    for (const user in USERS) {
+      if (USERS[user].name === name) {
+        this.currUser = USERS[user];
+        console.log('curr user', this.currUser);
+        this.isLogin = true;
+        return true;
+      }
+    }
     return false;
   }
 
