@@ -6,7 +6,8 @@ import {TEAM_USERS} from '../mocks/teamUsers';
 import {TEAM_COUNTS} from '../mocks/teamCounts';
 import {TeamUser} from '../models/teamUser';
 
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Base64 } from 'js-base64';
 
 @Injectable()
 export class UserService {
@@ -19,8 +20,10 @@ export class UserService {
   }
 
   login(name: string, passwd: string): boolean {
-    this.httpClient.get<User>('http://' + name + ':' + passwd + '@localhost:3000/api/users/' + name + '/json')
-      .subscribe(data => {this.currUser = data});
+    console.log(Base64.encode(name + ':' + passwd));
+    this.httpClient.get<User>('http://localhost:3000/api/users/' + name + '/json',
+      { headers: new HttpHeaders().set('Authorization', Base64.encode(name + ':' + passwd))})
+      .subscribe(data => { this.currUser = data; });
     console.log(this.currUser);
     return false;
   }
@@ -34,12 +37,12 @@ export class UserService {
     console.log('add user', user);
   }
 
-  //获取某个组件的用户信息
+  // 获取某个组件的用户信息
   getUsersInfoByTeam(team: string): TeamUser[] {
     let teamUsers: TeamUser[] = [];
     for ( const user of TEAM_USERS) {
       if (user.team === team) {
-        teamUsers.push(user)
+        teamUsers.push(user);
       }
     }
     return teamUsers;
