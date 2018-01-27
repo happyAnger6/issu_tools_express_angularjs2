@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 import { User } from '../models/user';
 import { USERS } from '../mocks/users';
 import {TeamCount} from '../models/teamCount';
@@ -8,33 +9,36 @@ import {TeamUser} from '../models/teamUser';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Base64 } from 'js-base64';
+import {Router} from "@angular/router";
 
 @Injectable()
 export class UserService {
   currUser: User;
   isLogin: boolean;
-  constructor(private httpClient: HttpClient) { this.isLogin = false; }
+  constructor(private route: Router,
+              private httpClient: HttpClient) { this.isLogin = false; }
 
   getCurUser(): User {
     return this.currUser;
   }
 
-  login(name: string, passwd: string): boolean {
-    console.log(Base64.encode(name + ':' + passwd));
-    this.httpClient.get<User>('http://localhost:3000/api/users/' + name + '/json',
-      { headers: new HttpHeaders().set('Authorization', Base64.encode(name + ':' + passwd))})
-      .subscribe(data => { this.currUser = data; });
-    console.log(this.currUser);
-    return false;
+  login(name: string, passwd: string): Observable<User[]> {
+    return this.httpClient.get<User[]>('http://localhost:3000/api/users/' + name + '/json',
+      { headers: new HttpHeaders().set('Authorization', 'basic ' +  Base64.encode(name + ':' + passwd))});
+  }
+
+  setUser(user: User) {
+    this.currUser = user;
+    this.isLogin = true;
   }
 
   logout() {
     this.currUser = null;
     this.isLogin = false;
+    this.route.navigateByUrl('/admin/login');
   }
 
   addUser(user: User) {
-    console.log('add user', user);
   }
 
   // 获取某个组件的用户信息

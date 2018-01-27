@@ -22,10 +22,13 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.userService.login(this.name, this.passwd)) {
-        this.router.navigateByUrl(this.returnUrl ? this.returnUrl : '/');
-       // this.router.navigateByUrl('/');
-    }
+    this.userService.login(this.name, this.passwd).subscribe(data => {
+        if (data.length == 1) {
+          this.userService.setUser(data[0]);
+          console.log(this.userService.getCurUser());
+          this.router.navigateByUrl( '/');
+        }
+    })
   }
 
 }

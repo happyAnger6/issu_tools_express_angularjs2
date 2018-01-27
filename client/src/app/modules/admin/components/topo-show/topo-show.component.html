@@ -1,17 +1,12 @@
 <div class="row" #topoArea>
-  <div id="contextmenu" class="btn-group" *ngIf="curNode">
-      <button type="button" class="btn btn-warning" disabled>{{ curNode.text }}</button>
-      <button type="button" class="btn btn-warning" (click)="onAddBranch(curNode.text)">添加子分支</button>
-      <button type="button" class="btn btn-warning">删除</button>
-  </div>
-  <div class="container" *ngIf="edit">
-    <label>{{ curNode.text }} 添加分支</label>
-    <form (ngSubmit)="onSubmit()" #newBranchForm="ngForm">
+  <div class="row" ng-if="!bNums">
+    <h4><i class="fa fa-th-list">添加分支</i></h4>
+    <form (ngSubmit)="onAddNewBranch()" #newBranchForm="ngForm">
       <div class="form-group">
-        <label for="name">子分支名称:</label>
-        <input type="text" class="form-control" id="name" [(ngModel)]="curNode.text" name="name" required #branchName="ngModel"/>
+        <label for="newBranchName">分支名称:</label>
+        <input type="text" class="form-control" id="newBranchName" [(ngModel)]="newBranch.Name" name="newName" required #newBranchName="ngModel"/>
       </div>
-      <div [hidden]="branchName.valid || branchName.pristine" class="alert alert-danger">
+      <div [hidden]="newBranchName.valid || newBranchName.pristine" class="alert alert-danger">
         必须输入名字.
       </div>
 
@@ -19,7 +14,27 @@
 
     </form>
   </div>
-  <div class="row">
+  <div id="contextmenu" class="btn-group" *ngIf="curNode">
+      <button type="button" class="btn btn-warning" disabled>{{ curNode.text }}</button>
+      <button type="button" class="btn btn-warning" (click)="onAddBranch(curNode.text)">添加子分支</button>
+      <button type="button" class="btn btn-warning" (click)="onDelBranch(curNode.text)">删除</button>
+  </div>
+  <div class="container" *ngIf="edit">
+    <label>{{ curNode.text }} 添加分支</label>
+    <form (ngSubmit)="onSubmit()" #newChildBranchForm="ngForm">
+      <div class="form-group">
+        <label for="childName">子分支名称:</label>
+        <input type="text" class="form-control" id="childName" [(ngModel)]="curNode.text" name="childName" required #childName="ngModel"/>
+      </div>
+      <div [hidden]="childName.valid || childName.pristine" class="alert alert-danger">
+        必须输入名字.
+      </div>
+
+      <button type="submit" class="btn btn-success" [disabled]="!newChildBranchForm.form.valid">添加</button>
+
+    </form>
+  </div>
+  <div class="row" ng-if="bNums">
   <i class="fa fa-line-chart>">分支拓扑:</i>
   <canvas id="canvas" width="1200" height="800"></canvas>
   </div>

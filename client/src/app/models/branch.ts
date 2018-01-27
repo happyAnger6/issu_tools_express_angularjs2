@@ -1,3 +1,3 @@
 export class Branch {
-  constructor(public id: number, public name: string, public parentId: number, public childIDs: number[], public feedbackFlag: number) {}
+  constructor(public Name: string, public ParentName: string, public ChildrenNames: string[], public FeedbackFlag: number) {}
 }

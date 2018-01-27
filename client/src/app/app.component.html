@@ -3,7 +3,7 @@
     <div class="row" *ngIf="userSerivce.getCurUser()">
       <div class="col-md-2"></div>
       <div class="col-md-4 pull-right" >
-        <i class="fa fa-user-circle-o fa-lg">你好 {{ userSerivce.getCurUser().name }}!</i> <i class="fa fa-thumbs-up fa-lg">  {{ userSerivce.getCurUser().role}}</i>
+        <i class="fa fa-user-circle-o fa-lg">你好 {{ userSerivce.getCurUser().Name }}!</i> <i class="fa fa-thumbs-up fa-lg">  {{ userSerivce.getCurUser().role}}</i>
       </div>
       <div class="col-md-4 pull-right" >
         <i (click)="userSerivce.logout()" class="fa fa-sign-out fa-lg">退出登陆</i>
@@ -15,8 +15,8 @@
       <div class="col-md-8">
   <nav *ngIf="userSerivce.getCurUser()" class="navbar navbar-expand-sm bg-light">
     <ul class="navbar-nav">
-      <li class="nav-item"><a class="nav-link" routerLink="feedback" routerLinkActive="active" *ngIf="userSerivce.getCurUser().role==='TL'">开始反馈</a></li>
-      <li class="nav-item"><a class="nav-link" routerLink="admin" routerLinkActive="active" *ngIf="userSerivce.getCurUser().role==='CMO'">管理页面</a></li>
+      <li class="nav-item"><a class="nav-link" routerLink="feedback" routerLinkActive="active" *ngIf="userSerivce.getCurUser().Role.toLowerCase()==='tl'">开始反馈</a></li>
+      <li class="nav-item"><a class="nav-link" routerLink="admin" routerLinkActive="active" *ngIf="userSerivce.getCurUser().Role.toLowerCase()==='admin'">管理页面</a></li>
     </ul>
   </nav>
   <router-outlet></router-outlet>

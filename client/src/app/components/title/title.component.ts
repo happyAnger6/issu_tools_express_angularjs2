@@ -12,7 +12,7 @@ export class TitleComponent implements OnInit {
   title = 'issu tools';
   user = '';
   constructor(userService: UserService) {
-    this.user = userService.getCurUser() ? userService.getCurUser().name : '无名士';
+    this.user = userService.getCurUser() ? userService.getCurUser().Name : '无名士';
   }
 
   ngOnInit() {

@@ -14,7 +14,9 @@ export class VersionInfoComponent implements OnInit {
   constructor(private branchService: BranchService) { }
 
   ngOnInit() {
-    this.feedbackBranchs = this.branchService.getFeedbackBranchs();
+    this.branchService.getFeedbackBranchs(function(branchs){
+      this.feedbackBranchs = branchs;
+    });
   }
 
   onSelect(branch: Branch): void {

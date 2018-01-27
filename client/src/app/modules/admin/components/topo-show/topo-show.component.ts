@@ -5,7 +5,7 @@ import { DataSet } from 'vis/index-timeline-graph2d';
 
 import { BranchService } from '../../../../services/branch.service';
 import {TopoService} from '../../../../services/topo.service';
-import {BRANCHS} from "../../../../mocks/branchs";
+import {Branch} from '../../../../models/branch';
 
 @Component({
   selector: 'app-topo-show',
@@ -17,6 +17,8 @@ export class TopoShowComponent implements OnInit, AfterViewInit {
 
   public curNode: any;
   public edit = false;
+  public bNums = 0;
+  private newBranch = new Branch("", "", [], 0);
   constructor(private branchService: BranchService,
               private topoService: TopoService) { }
 
@@ -28,12 +30,26 @@ export class TopoShowComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     var canvas = document.getElementById('canvas');
-    this.topoService.initContainer(canvas, 100, 30, 10, 20, 2, this);
-    this.topoService.drawNodes(BRANCHS, 0);
+    var topoComp = this;
+    this.branchService.getFeedbackBranchs(function(branchs){
+      topoComp.bNums = branchs? branchs.length : 0 ;
+      topoComp.topoService.initContainer(canvas, 100, 30, 10, 20, 2, topoComp);
+      topoComp.topoService.drawNodes(branchs, 0);
+    });
   }
 
+  onAddNewBranch() {
+    this.branchService.addBranch(this.newBranch, function(result){
+
+    });
+  }
   onAddBranch(parent: string) {
     this.edit = true;
   }
 
+  onDelBranch(branch: string) {
+    this.branchService.delBranch(branch, function(data){
+      console.log(data);
+    })
+  }
 }

@@ -21,6 +21,10 @@ import { AdminModule } from './modules/admin/admin.module';
 
 import { SharedModule } from './modules/shared/shared.module';
 import { LostPageComponent } from './components/lost-page/lost-page.component';
+import {HttpLogService} from "./services/http-log.service";
+import {HttpLogBackendService} from "./services/http-log-backend.service";
+import {Http, RequestOptions} from "@angular/http";
+import {httpFactory} from "./shared/http-factory";
 
 @NgModule({
   declarations: [
@@ -45,7 +49,10 @@ import { LostPageComponent } from './components/lost-page/lost-page.component';
   providers: [
     UserService,
     BranchService,
-    AuthGuardService
+    AuthGuardService,
+    HttpLogService,
+    HttpLogBackendService,
+    {provide: Http, useFactory: httpFactory, deps:[HttpLogBackendService, RequestOptions]},
   ],
   bootstrap: [AppComponent]
 })

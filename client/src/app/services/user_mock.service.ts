@@ -20,7 +20,7 @@ export class UserService {
 
   login(name: string, passwd: string): boolean {
     for (const user in USERS) {
-      if (USERS[user].name === name) {
+      if (USERS[user].Name === name) {
         this.currUser = USERS[user];
         console.log('curr user', this.currUser);
         this.isLogin = true;

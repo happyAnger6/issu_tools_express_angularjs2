@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Branch} from "../models/branch";
+import {noUndefined} from "@angular/compiler/src/util";
 
 @Injectable()
 export class TopoService {
@@ -90,18 +91,19 @@ export class TopoService {
   }
 
   drawTopo(branchs: Branch[], branch: Branch, x: number, y: number, parent: any, lineType: number){
-    var node = this.newNode(x, y, branch.name);
+    var node = this.newNode(x, y, branch.Name);
     if (parent && lineType > 0)
     {
       this.drawLine(parent, node, lineType)
     }
-    branch.childIDs.forEach((val, idx, ary) => {
+    branch.ChildrenNames.forEach((val, idx, ary) => {
       this.maxX = this.maxX + (this.nodeW + 30) * idx;
       this.drawTopo(branchs, branchs[val], this.maxX, y + this.nodeH + 30, node, idx > 0? 2 : 1);
     });
   }
 
   drawNodes(branchs: Branch[], root: number) {
+    if (!branchs || branchs.length === 0) return;
     this.maxX = this.startX;
     this.drawTopo(branchs, branchs[root], this.startX, this.startY, null, -1);
   }
