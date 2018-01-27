@@ -1,5 +1,5 @@
 <div class="row" #topoArea>
-  <div class="row" ng-if="!bNums">
+  <div class="row" *ngIf="!bNums">
     <h4><i class="fa fa-th-list">添加分支</i></h4>
     <form (ngSubmit)="onAddNewBranch()" #newBranchForm="ngForm">
       <div class="form-group">
@@ -21,10 +21,10 @@
   </div>
   <div class="container" *ngIf="edit">
     <label>{{ curNode.text }} 添加分支</label>
-    <form (ngSubmit)="onSubmit()" #newChildBranchForm="ngForm">
+    <form (ngSubmit)="onAddChildBranch(curNode.text)" #newChildBranchForm="ngForm">
       <div class="form-group">
         <label for="childName">子分支名称:</label>
-        <input type="text" class="form-control" id="childName" [(ngModel)]="curNode.text" name="childName" required #childName="ngModel"/>
+        <input type="text" class="form-control" id="childName" [(ngModel)]="newChildBranch.Name" name="childName" required #childName="ngModel"/>
       </div>
       <div [hidden]="childName.valid || childName.pristine" class="alert alert-danger">
         必须输入名字.

@@ -18,7 +18,8 @@ export class TopoShowComponent implements OnInit, AfterViewInit {
   public curNode: any;
   public edit = false;
   public bNums = 0;
-  private newBranch = new Branch("", "", [], 0);
+  public newBranch = new Branch("", "", [], 0);
+  public newChildBranch = new Branch("", "", [], 0);
   constructor(private branchService: BranchService,
               private topoService: TopoService) { }
 
@@ -29,13 +30,17 @@ export class TopoShowComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    var canvas = document.getElementById('canvas');
     var topoComp = this;
     this.branchService.getFeedbackBranchs(function(branchs){
-      topoComp.bNums = branchs? branchs.length : 0 ;
-      topoComp.topoService.initContainer(canvas, 100, 30, 10, 20, 2, topoComp);
-      topoComp.topoService.drawNodes(branchs, 0);
+      topoComp.bNums = branchs? branchs.length : 0;
+      topoComp.drawTopo(branchs);
     });
+  }
+
+  drawTopo(branchs) {
+    var canvas = document.getElementById('canvas');
+    this.topoService.initContainer(canvas, 100, 30, 10, 20, 2, this);
+    this.topoService.drawNodes(branchs, 0);
   }
 
   onAddNewBranch() {
@@ -43,7 +48,16 @@ export class TopoShowComponent implements OnInit, AfterViewInit {
 
     });
   }
-  onAddBranch(parent: string) {
+
+  onAddChildBranch(parent: string) {
+    this.edit = false;
+    this.newChildBranch.ParentName = parent;
+    this.branchService.addBranch(this.newChildBranch, function(result){
+
+    });
+  }
+
+  onAddBranch() {
     this.edit = true;
   }
 
