@@ -43,8 +43,8 @@ export class UserService {
   getUsersInfoByTeam(team: string): TeamUser[] {
     let teamUsers: TeamUser[] = [];
     for ( const user of TEAM_USERS) {
-      if (user.team === team) {
-        teamUsers.push(user)
+      if (user.Team === team) {
+        teamUsers.push(user);
       }
     }
     return teamUsers;

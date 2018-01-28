@@ -10,12 +10,12 @@ export class HttpLogBackendService implements ConnectionBackend{
   }
 
   createConnection(request: Request): XHRConnection {
-    let interceptor = this._httpLogService;
+    const interceptor = this._httpLogService;
 
-    let req = interceptor.beforeRequest? interceptor.beforeRequest(request): request;
-    let result = this._xhrBackend.createConnection(request);
+    const req = interceptor.beforeRequest ? interceptor.beforeRequest(request): request;
+    const result = this._xhrBackend.createConnection(request);
 
-    result.response = interceptor.afterResponse? interceptor.afterResponse(result.response): result.response;
+    result.response = interceptor.afterResponse ? interceptor.afterResponse(result.response) : result.response;
 
     return result;
   }

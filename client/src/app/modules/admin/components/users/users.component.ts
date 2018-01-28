@@ -14,12 +14,31 @@ export class UsersComponent implements OnInit {
   public teamUsers: TeamUser[];
   public selectedTeam: string;
   public selectedUser: TeamUser;
-  public addUser: TeamUser = new TeamUser("", "", "", "None");
+  public addUser: TeamUser = new TeamUser('', '', '', 'None');
   public oper: number;
   constructor(private userService: UserService) { }
 
   ngOnInit() {
-    this.teamCounts = this.userService.getAllTeamCount();
+    const comp = this;
+    this.userService.getAllUsers(function(err, users){
+      if (!err) {
+        const _teamCount: TeamCount[] = [];
+        for ( const user of users ) {
+          let flag = 0;
+          for (const teamCount of _teamCount) {
+            if (teamCount.name === user.Team) {
+              teamCount.userNum++;
+              flag = 1;
+              break;
+            }
+          }
+          if ( 0 === flag) {
+            _teamCount.push(new TeamCount(user.Team, 1));
+          }
+        }
+        comp.teamCounts = _teamCount;
+      }
+    });
   }
 
   onInitEnv() {
@@ -30,7 +49,12 @@ export class UsersComponent implements OnInit {
   onSelectTeam(team: string) {
     this.onInitEnv();
     this.selectedTeam = team;
-    this.teamUsers = this.userService.getUsersInfoByTeam(team);
+    const comp = this;
+    this.userService.getUsersInfoByTeam(team, function(err, users) {
+     if (!err) {
+       comp.teamUsers = users;
+     }
+    });
   }
 
   onSelectUser(user: TeamUser) {
@@ -48,14 +72,14 @@ export class UsersComponent implements OnInit {
   }
 
   onAddUser() {
-    this.addUser.team = this.selectedTeam;
-    console.log("add user: ", this.addUser);
+    this.addUser.Team = this.selectedTeam;
+    console.log('add user: ', this.addUser);
   }
 
   setTeamClass(team: TeamCount) {
     if (team.name === this.selectedTeam) {
-      return "btn btn-danger";
+      return 'btn btn-danger';
     }
-    return "btn btn-info";
+    return 'btn btn-info';
   }
 }

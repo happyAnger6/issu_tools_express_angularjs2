@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import {Branch} from "../models/branch";
-import {noUndefined} from "@angular/compiler/src/util";
+import {Branch} from '../models/branch';
+import {noUndefined} from '@angular/compiler/src/util';
 
 @Injectable()
 export class TopoService {
@@ -23,21 +23,21 @@ export class TopoService {
 
     this.stage.click(function(event){
       if (event.button == 0) {
-        $("#contextmenu").hide();
+        $('#contextmenu').hide();
       }
     });
   };
 
   handler(event, node, my) {
     if(event.button == 2) {
-      $("#contextmenu").css({
+      $('#contextmenu').css({
       }).show();
       my.curNode = node;
     }
   }
 
   // 节点
-  newNode(x, y, text){
+  newNode(x, y, text) {
     var node = new JTopo.Node(text);
     node.setLocation(x, y);
     node.setSize(this.nodeW, this.nodeH);
@@ -83,13 +83,13 @@ export class TopoService {
 
   drawLine(nodeA: any, nodeB: any, lineType: number) {
     if (1 === lineType) {
-      this.newLink(nodeA, nodeB, "");
+      this.newLink(nodeA, nodeB, '');
     }
-    else if(2 === lineType) {
-      this.newFoldLink(nodeA, nodeB, "");
+    else if (2 === lineType) {
+      this.newFoldLink(nodeA, nodeB, '');
     }
   }
-
+/*
   drawTopo(branchs: Branch[], branch: Branch, x: number, y: number, parent: any, lineType: number){
     var node = this.newNode(x, y, branch.Name);
     if (parent && lineType > 0)
@@ -100,12 +100,56 @@ export class TopoService {
       this.maxX = this.maxX + (this.nodeW + 30) * idx;
       this.drawTopo(branchs, branchs[val], this.maxX, y + this.nodeH + 30, node, idx > 0? 2 : 1);
     });
+  }*/
+
+  getRootElement(nodes: any[]): any {
+   if (!nodes || nodes.length === 0) {
+     return null;
+   }
+   for (const node of nodes) {
+     if (node.ParentName === '') {
+       return node;
+     }
+   }
   }
 
+  getNodeByName(nodes, name) {
+    for ( const node of nodes) {
+      if (node.Name === name) {
+        return node;
+      }
+    }
+    return null;
+  }
+
+  drawTopo(nodes, node, x, y, parent, lineType) {
+    const jnode = this.newNode(x, y, node.Name);
+    if (parent != null && lineType > 0) {
+      this.drawLine(parent, jnode, lineType);
+    }
+    node.ChildrenNames.forEach((val, idx, ary) => {
+        const childNode = this.getNodeByName(nodes, val);
+        if (childNode !== null) {
+          if (idx > 0) {
+            this.maxX = this.maxX + this.nodeW + 30;
+          }
+          this.drawTopo(nodes, childNode, this.maxX, y + this.nodeH + 30, jnode, idx > 0 ? 2 : 1);
+        }
+    });
+  }
+
+  drawNodes(nodes: any[]) {
+    this.maxX = this.startX;
+    const root = this.getRootElement(nodes);
+    if (root != null) {
+     this.drawTopo(nodes, root, this.startX, this.startY, null, -1);
+    }
+  }
+
+ /*
   drawNodes(branchs: Branch[], root: number) {
-    if (!branchs || branchs.length === 0) return;
     this.maxX = this.startX;
     this.drawTopo(branchs, branchs[root], this.startX, this.startY, null, -1);
-  }
+  }*/
 
 }

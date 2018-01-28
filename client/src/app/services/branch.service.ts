@@ -24,10 +24,10 @@ export class BranchService {
      { headers: new HttpHeaders().set('Authorization', 'basic ' +  Base64.encode(user.Name + ':' + user.Passwd))})
      .subscribe(data => {
           fn(data);
-     })
+     });
   }
 
-  delBranch(name: string, fn){
+  delBranch(name: string, fn) {
     const user = this.userService.getCurUser();
     if (!user) {
       return fn(null);
@@ -36,19 +36,19 @@ export class BranchService {
       { headers: new HttpHeaders().set('Authorization', 'basic ' +  Base64.encode(user.Name + ':' + user.Passwd))})
       .subscribe(data => {
         fn(data);
-      })
+      });
   }
 
-  addBranch(branch: Branch, fn){
+  addBranch(branch: Branch, fn) {
     const user = this.userService.getCurUser();
     if (!user) {
       return fn(null);
     }
     this.httpClient.post(API_BRANCH_URI + name + '/create', branch,
       { headers: new HttpHeaders().set('Authorization', 'basic ' +  Base64.encode(user.Name + ':' + user.Passwd))})
-      .subscribe(result=> {
+      .subscribe(result => {
         fn(result);
-      })
+      });
   }
 
 }

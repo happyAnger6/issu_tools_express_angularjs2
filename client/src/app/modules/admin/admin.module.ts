@@ -19,6 +19,7 @@ import { BranchService } from '../../services/branch.service';
 import { TopoService } from '../../services/topo.service';
 import { UsersComponent } from './components/users/users.component';
 import {UserService} from '../../services/user.service';
+import { TeamsComponent } from './components/teams/teams.component';
 
 @NgModule({
   imports: [
@@ -28,12 +29,20 @@ import {UserService} from '../../services/user.service';
     AdminRoutingModule,
   ],
   providers: [
-   TeamService,
    FeedbackService,
    PromptService,
    BranchService,
    TopoService,
   ],
-  declarations: [AdminMainComponent, FeedbackComponent, TeamsHeaderComponent, UserModulesInfoComponent, PromptComponent, TopoShowComponent, UsersComponent]
+  declarations: [
+    AdminMainComponent,
+    FeedbackComponent,
+    TeamsHeaderComponent,
+    UserModulesInfoComponent,
+    PromptComponent,
+    TopoShowComponent,
+    UsersComponent,
+    TeamsComponent
+  ]
 })
 export class AdminModule { }

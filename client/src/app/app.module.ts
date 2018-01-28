@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 
 import { ContactModule } from './modules/contact/contact.module';
 import { FeedbackModule } from './modules/feedback/feedback.module';
@@ -21,10 +21,14 @@ import { AdminModule } from './modules/admin/admin.module';
 
 import { SharedModule } from './modules/shared/shared.module';
 import { LostPageComponent } from './components/lost-page/lost-page.component';
-import {HttpLogService} from "./services/http-log.service";
-import {HttpLogBackendService} from "./services/http-log-backend.service";
-import {Http, RequestOptions} from "@angular/http";
-import {httpFactory} from "./shared/http-factory";
+import {HttpLogService} from './services/http-log.service';
+import {HttpLogBackendService} from './services/http-log-backend.service';
+import {Http, RequestOptions} from '@angular/http';
+import {httpFactory} from './shared/http-factory';
+import {TeamService} from './services/team.service';
+import {AuthInterceptor} from './shared/authInterceptor';
+import {AuthService} from "./services/auth.service";
+import {TimingInterceptor} from "./shared/timeInterceptor";
 
 @NgModule({
   declarations: [
@@ -48,11 +52,12 @@ import {httpFactory} from "./shared/http-factory";
   ],
   providers: [
     UserService,
+    TeamService,
     BranchService,
     AuthGuardService,
-    HttpLogService,
-    HttpLogBackendService,
-    {provide: Http, useFactory: httpFactory, deps:[HttpLogBackendService, RequestOptions]},
+    AuthService,
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: TimingInterceptor, multi: true},
   ],
   bootstrap: [AppComponent]
 })

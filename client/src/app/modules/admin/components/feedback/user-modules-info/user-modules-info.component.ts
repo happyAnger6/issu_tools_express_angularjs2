@@ -18,13 +18,13 @@ export class UserModulesInfoComponent implements OnInit {
   constructor(private teamService: TeamService) { }
 
   ngOnInit() {
-    this.userModulesDetails = this.teamService.getAllUserModulesByTeam(this._team.name);
+    this.userModulesDetails = this.teamService.getAllUserModulesByTeam(this._team.Name);
   }
 
   @Input()
   set team(team: Team) {
     this._team  = team;
-    this.userModulesDetails = this.teamService.getAllUserModulesByTeam(this._team.name);
+    this.userModulesDetails = this.teamService.getAllUserModulesByTeam(this._team.Name);
   }
 
   get team(): Team {

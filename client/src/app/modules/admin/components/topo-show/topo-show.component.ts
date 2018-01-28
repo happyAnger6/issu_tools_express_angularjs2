@@ -18,8 +18,8 @@ export class TopoShowComponent implements OnInit, AfterViewInit {
   public curNode: any;
   public edit = false;
   public bNums = 0;
-  public newBranch = new Branch("", "", [], 0);
-  public newChildBranch = new Branch("", "", [], 0);
+  public newBranch = new Branch('', '', [], 0);
+  public newChildBranch = new Branch('', '', [], 0);
   constructor(private branchService: BranchService,
               private topoService: TopoService) { }
 
@@ -30,17 +30,25 @@ export class TopoShowComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    var topoComp = this;
+    const topoComp = this;
     this.branchService.getFeedbackBranchs(function(branchs){
-      topoComp.bNums = branchs? branchs.length : 0;
+      topoComp.bNums = branchs ? branchs.length : 0;
+      topoComp.drawTopo(branchs);
+    });
+  }
+
+  refreshTopo() {
+    const topoComp = this;
+    this.branchService.getFeedbackBranchs(function(branchs) {
+      topoComp.bNums = branchs ? branchs.length : 0;
       topoComp.drawTopo(branchs);
     });
   }
 
   drawTopo(branchs) {
-    var canvas = document.getElementById('canvas');
-    this.topoService.initContainer(canvas, 100, 30, 10, 20, 2, this);
-    this.topoService.drawNodes(branchs, 0);
+    const canvas = document.getElementById('canvas');
+    this.topoService.initContainer(canvas, 130, 30, 10, 20, 2, this);
+    this.topoService.drawNodes(branchs);
   }
 
   onAddNewBranch() {
@@ -52,8 +60,9 @@ export class TopoShowComponent implements OnInit, AfterViewInit {
   onAddChildBranch(parent: string) {
     this.edit = false;
     this.newChildBranch.ParentName = parent;
+    const topoComp = this;
     this.branchService.addBranch(this.newChildBranch, function(result){
-
+      topoComp.refreshTopo();
     });
   }
 
@@ -62,8 +71,8 @@ export class TopoShowComponent implements OnInit, AfterViewInit {
   }
 
   onDelBranch(branch: string) {
-    this.branchService.delBranch(branch, function(data){
-      console.log(data);
-    })
+    const topoComp = this;
+    this.branchService.delBranch(branch, function(result){
+    });
   }
 }

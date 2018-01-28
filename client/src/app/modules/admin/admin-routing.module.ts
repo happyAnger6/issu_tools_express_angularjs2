@@ -7,6 +7,7 @@ import { FeedbackComponent } from './components/feedback/feedback.component';
 import { PromptComponent } from './components/prompt/prompt.component';
 import { TopoShowComponent } from './components/topo-show/topo-show.component';
 import { UsersComponent } from './components/users/users.component';
+import {TeamsComponent} from './components/teams/teams.component';
 
 const adminRoutes: Routes = [
   { path: 'admin', component: AdminMainComponent, canActivate: [AuthGuardService],
@@ -22,6 +23,9 @@ const adminRoutes: Routes = [
       },
       { path: 'users',
         component: UsersComponent
+      },
+      { path: 'teams',
+        component: TeamsComponent
       },
     ]
   }

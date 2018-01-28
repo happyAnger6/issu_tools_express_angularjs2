@@ -1,3 +1,3 @@
 export class TeamUser {
-  constructor(public name: string, public module: string, public team: string, public role: string) {}
+  constructor(public Name: string, public Modules: string, public Team: string, public Role: string) {}
 }

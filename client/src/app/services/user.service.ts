@@ -9,17 +9,27 @@ import {TeamUser} from '../models/teamUser';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Base64 } from 'js-base64';
-import {Router} from "@angular/router";
+import {Router} from '@angular/router';
+import {AuthService} from "./auth.service";
+import {API_USERS_URI} from "../shared/http";
 
 @Injectable()
 export class UserService {
   currUser: User;
   isLogin: boolean;
   constructor(private route: Router,
-              private httpClient: HttpClient) { this.isLogin = false; }
+              private httpClient: HttpClient,
+              private authInfo: AuthService) { this.isLogin = false; }
 
   getCurUser(): User {
     return this.currUser;
+  }
+
+  getAuthHeader() {
+    if (this.isLogin && this.currUser) {
+      return 'basic ' + Base64.encode(this.currUser.Name + ':' + this.currUser.Passwd);
+    }
+    return null;
   }
 
   login(name: string, passwd: string): Observable<User[]> {
@@ -35,6 +45,7 @@ export class UserService {
   logout() {
     this.currUser = null;
     this.isLogin = false;
+    this.authInfo.setUser(null);
     this.route.navigateByUrl('/admin/login');
   }
 
@@ -42,18 +53,24 @@ export class UserService {
   }
 
   // 获取某个组件的用户信息
-  getUsersInfoByTeam(team: string): TeamUser[] {
-    let teamUsers: TeamUser[] = [];
-    for ( const user of TEAM_USERS) {
-      if (user.team === team) {
-        teamUsers.push(user);
-      }
-    }
-    return teamUsers;
+  getUsersInfoByTeam(team: string, fn) {
+    this.httpClient.get<User[]>(API_USERS_URI + 'json?team=' + team)
+      .subscribe(result => {
+          fn(null, result);
+        },
+        err => {
+          fn(err, null);
+        });
   }
 
   // 获取各个组件的用户数
-  getAllTeamCount(): TeamCount[] {
-    return TEAM_COUNTS;
+  getAllUsers(fn) {
+    this.httpClient.get<User[]>(API_USERS_URI + 'json')
+      .subscribe(result => {
+        fn(null, result);
+      },
+        err => {
+       fn(err, null);
+        });
   }
 }

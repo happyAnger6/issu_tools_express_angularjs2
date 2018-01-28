@@ -1,3 +1,3 @@
 export class Module {
-  constructor() {}
+  constructor(public Name: string, public Team: string, public Delivers: string[]) {}
 }

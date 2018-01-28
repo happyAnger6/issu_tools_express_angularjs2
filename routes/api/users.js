@@ -5,12 +5,22 @@ var User = require('../../models/user');
 
 /* GET users listing. */
 router.get('/json', function(req, res, next) {
-  User.find(function(err, users){
-    if (err) {
-        return next(err);
+    if(req.query && req.query.team) {
+        User.find({Team: req.query.team}, function(err, users){
+            if (err) {
+                return next(err);
+            }
+            res.json(users);
+        });
     }
-    res.json(users);
-  })
+    else {
+        User.find(function(err, users){
+            if (err) {
+                return next(err);
+            }
+            res.json(users);
+        });
+    }
 });
 
 router.get('/:jobno/json', function(req, res, next) {
