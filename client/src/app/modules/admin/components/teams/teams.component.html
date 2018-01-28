@@ -22,11 +22,11 @@
 
     <div class="form-group">
       <label for="manager">组件经理:</label>
-      <input type="text" class="form-control" id="manager" [(ngModel)]="addTeam.Manager" name="addManager" required #teamManager="ngModel">
+      <input type="text" class="form-control" id="manager" [(ngModel)]="addTeam.Manager" name="addManager" #teamManager="ngModel">
     </div>
-    <div [hidden]="teamManager.valid || teamManager.pristine" class="alert alert-danger">
+    <!--<div [hidden]="teamManager.valid || teamManager.pristine" class="alert alert-danger">
       必须输入名字.
-    </div>
+    </div>-->
     <button type="submit" class="btn btn-success" [disabled]="!newTeamForm.form.valid"><i class="fa fa-plus-square-o"> 新增</i></button>
 
   </form>

@@ -46,7 +46,9 @@
 
     <div class="form-group">
       <label for="team">组件:</label>
-      <input type="text" class="form-control" id="team" value="{{selectedTeam}}" disabled>
+      <select class="form-control" id="team">
+        <option *ngFor="let teamName of teamNames">{{teamName}}</option>
+      </select>
     </div>
 
     <button type="submit" class="btn btn-success" [disabled]="!newUserForm.form.valid"><i class="fa fa-plus-square-o"> 新增</i></button>

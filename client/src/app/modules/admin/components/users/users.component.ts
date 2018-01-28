@@ -14,6 +14,7 @@ export class UsersComponent implements OnInit {
   public teamUsers: TeamUser[];
   public selectedTeam: string;
   public selectedUser: TeamUser;
+  public teamNames: string[];
   public addUser: TeamUser = new TeamUser('', '', '', 'None');
   public oper: number;
   constructor(private userService: UserService) { }
